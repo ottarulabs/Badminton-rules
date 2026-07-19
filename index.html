@@ -103,25 +103,89 @@
     color: var(--text-dim); margin-bottom:6px; display:block;
   }
 
-  /* serve side simulator */
-  .sim{
-    background: var(--bg-panel-2); border:1px solid var(--border); border-radius:16px;
-    padding:20px; display:flex; flex-direction:column; align-items:center; gap:14px; margin-top:14px;
+  /* รู้หรือไม่ FAQ accordion */
+  .faq-heading{
+    font-family:'Kanit'; font-weight:700; font-size:17px; color: var(--gold);
+    margin:22px 0 12px;
   }
-  .sim-score{
-    display:flex; align-items:center; gap:18px;
+  .faq-list{ display:flex; flex-direction:column; gap:10px; }
+  .faq-item{
+    background: var(--bg-panel); border:1px solid var(--border); border-radius:14px;
+    overflow:hidden;
   }
-  .sim-score button{
-    width:40px; height:40px; border-radius:50%; border:1px solid var(--border);
-    background: var(--bg-panel); color:var(--text); font-size:20px; cursor:pointer;
-    font-family:'Kanit';
+  .faq-item summary{
+    cursor:pointer; padding:14px 44px 14px 18px; font-family:'Kanit'; font-weight:600;
+    font-size:14.5px; color: var(--text); list-style:none; position:relative;
+    -webkit-tap-highlight-color: transparent;
   }
-  .sim-score button:hover{ background: var(--gold); color:#1a1204; }
-  .sim-score .score-display{
-    font-family:'Kanit'; font-weight:800; font-size:40px; color: var(--gold); min-width:70px; text-align:center;
+  .faq-item summary::-webkit-details-marker{ display:none; }
+  .faq-item summary::after{
+    content:'+'; position:absolute; right:16px; top:50%; transform:translateY(-50%);
+    font-size:20px; font-weight:400; color: var(--gold); transition: transform .2s ease;
   }
-  .sim-result{ font-family:'Kanit'; font-weight:600; font-size:15px; text-align:center; color:var(--text);}
-  .sim-result .side{ color: var(--serve); }
+  .faq-item[open] summary::after{ content:'\2212'; }
+  .faq-item summary:hover{ background: rgba(255,255,255,.03); }
+  .faq-answer{
+    padding:0 18px 16px; color: var(--text); font-size:14px; line-height:1.65;
+  }
+  .faq-answer b{ color: var(--gold); }
+
+  /* rally point simulator */
+  .rally-sim{
+    background: var(--bg-panel-2); border:1px solid var(--border); border-radius:18px;
+    padding:20px; margin-bottom:16px;
+  }
+  .rally-hint{ color: var(--text-dim); font-size:13px; text-align:center; margin-bottom:16px; }
+  .mini-court{
+    width:100%; max-width:120px; aspect-ratio: 6.1 / 13.4; margin:0 auto 16px;
+    border-radius:8px; overflow:hidden; border:2px solid var(--court-line);
+    display:flex; flex-direction:column;
+  }
+  .court-half{ flex:1; display:grid; grid-template-columns:1fr 1fr; background: var(--court); }
+  .court-box{
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px;
+    font-size:18px; border:1px solid rgba(255,255,255,.14); transition: background .25s ease;
+  }
+  .court-box.target-box{ background: rgba(46,168,154,.4); }
+  .net-line{ height:4px; background: var(--gold); flex-shrink:0; }
+  .serve-label{ font-family:'Kanit'; font-weight:600; font-size:8.5px; color: var(--gold); line-height:1; }
+  .rally-scoreboard{
+    display:flex; align-items:center; justify-content:center; gap:20px; margin-bottom:14px;
+  }
+  .team-panel{
+    text-align:center; flex:1; max-width:140px; padding:10px 8px; border-radius:12px;
+    border:2px solid transparent; transition: border-color .25s ease, background .25s ease;
+  }
+  .team-panel.serving{ border-color: var(--gold); background: rgba(242,177,52,.08); }
+  .team-label{ font-family:'Kanit'; font-weight:600; font-size:13px; color: var(--text-dim); }
+  .team-score{ font-family:'Kanit'; font-weight:800; font-size:38px; color: var(--text); line-height:1.2; }
+  .serve-indicator{
+    font-family:'Kanit'; font-size:11px; color: var(--gold); opacity:0; transition: opacity .25s ease;
+  }
+  .vs-divider{ font-family:'Kanit'; font-weight:700; color: var(--text-dim); font-size:13px; }
+  .rally-log{
+    background: var(--bg-panel); border:1px dashed var(--border); border-radius:10px;
+    padding:12px 14px; text-align:center; font-size:13.5px; color: var(--text); min-height:44px;
+    display:flex; align-items:center; justify-content:center; margin-bottom:16px;
+  }
+  .rally-log.log-winner{ border-color: var(--gold); color: var(--gold); font-family:'Kanit'; font-weight:600; }
+  .rally-buttons{ display:flex; gap:12px; margin-bottom:14px; }
+  .rally-btn{
+    flex:1; font-family:'Kanit'; font-weight:700; font-size:14.5px; padding:14px 10px;
+    border-radius:12px; border:none; cursor:pointer; color:#1a1204;
+    transition: transform .1s ease, box-shadow .1s ease, filter .15s ease;
+  }
+  .rally-btn.top-btn{ background: var(--gold); box-shadow: 0 4px 0 #a67424, 0 6px 14px rgba(0,0,0,.35); }
+  .rally-btn.bottom-btn{ background: var(--rally); color:#04211d; box-shadow: 0 4px 0 #1c7269, 0 6px 14px rgba(0,0,0,.35); }
+  .rally-btn:hover:not(:disabled){ filter: brightness(1.1); }
+  .rally-btn:active:not(:disabled){ transform: translateY(3px); box-shadow: 0 1px 0 #a67424; }
+  .rally-btn.bottom-btn:active:not(:disabled){ box-shadow: 0 1px 0 #1c7269; }
+  .rally-btn:disabled{ opacity:.35; cursor:not-allowed; box-shadow:none; transform:none; }
+  .reset-btn{
+    display:block; margin:0 auto; font-family:'Sarabun'; font-size:12.5px; color: var(--text-dim);
+    background:none; border:1px solid var(--border); border-radius:999px; padding:6px 16px; cursor:pointer;
+  }
+  .reset-btn:hover{ color: var(--text); border-color: var(--gold); }
 
   footer{ text-align:center; margin-top:48px; color: var(--text-dim); font-size:12.5px; }
 </style>
@@ -160,86 +224,82 @@
       <div class="swatches">
         <div class="swatch"><span class="dot" style="background:var(--serve)"></span> พื้นที่ที่ลูกเสิร์ฟต้องตกลงไป (ใน)</div>
         <div class="swatch"><span class="dot" style="background:var(--rally)"></span> พื้นที่ที่ใช้ได้ตอนตีโต้ (ทั้งคอร์ท)</div>
-        <div class="swatch"><span class="dot" style="background:#c23a2a; opacity:.55"></span> โซนที่ "ออก" เฉพาะตอนเสิร์ฟคู่ (แต่ตอนตีโต้ถือว่าในนะ)</div>
       </div>
     </div>
   </div>
 
   <!-- SCORING RULES -->
   <div class="section">
-    <h2><span class="num">1</span>วิธีนับแต้ม</h2>
-    <div class="card-grid two">
-      <div class="rule-card">
-        <span class="tag">รูปแบบแมตช์</span>
-        แข่งแบบ <b>Best of 3 เกม</b> ใครชนะ 2 เกมก่อนคือผู้ชนะแมตช์
-      </div>
-      <div class="rule-card">
-        <span class="tag">แต้มต่อเกม</span>
-        เกมละ <b>21 แต้ม</b> ฝ่ายที่ทำถึง 21 ก่อน และนำอย่างน้อย 2 แต้ม เป็นฝ่ายชนะ
-      </div>
-      <div class="rule-card">
-        <span class="tag">ดิวส์ (Deuce)</span>
-        ถ้าคะแนนเสมอ <b>20–20</b> ต้องเล่นต่อจนกว่าฝ่ายใดฝ่ายหนึ่งนำ 2 แต้ม แต่ถ้าถึง <b>29–29</b> ใครได้ 30 ก่อนชนะทันที (คะแนนสูงสุด 30)
-      </div>
-      <div class="rule-card">
-        <span class="tag">Rally Point System</span>
-        ทุกลูกที่จบแรลลี่ <b>นับแต้มให้ฝ่ายชนะแรลลี่นั้นเสมอ</b> ไม่ว่าฝ่ายนั้นจะเป็นฝ่ายเสิร์ฟหรือไม่ก็ตาม
-      </div>
-      <div class="rule-card">
-        <span class="tag">สลับฝั่งสนาม</span>
-        สลับฝั่งเมื่อจบเกมที่ 1 และก่อนเริ่มเกมที่ 3 ต้องสลับฝั่งอีกครั้งเมื่อฝ่ายใดฝ่ายหนึ่งถึง <b>11 แต้ม</b>
-      </div>
-      <div class="rule-card">
-        <span class="tag">เปลี่ยนฝ่ายเสิร์ฟ</span>
-        เมื่อฝ่ายรับลูกเสิร์ฟเป็นฝ่ายชนะแรลลี่ ฝ่ายนั้นจะได้แต้ม <b>และ</b> ได้สิทธิ์เสิร์ฟต่อทันที
-      </div>
-    </div>
-  </div>
+    <h2><span class="num">1</span>วิธีนับแต้มและการเสิร์ฟ</h2>
 
-  <div class="section">
-    <h2><span class="num">2</span>เสิร์ฟจากฝั่งไหน — ลองกดดูคะแนนจำลอง</h2>
-    <div class="sim">
-      <div class="sim-score">
-        <button id="scoreMinus">−</button>
-        <div class="score-display" id="scoreDisplay">0</div>
-        <button id="scorePlus">+</button>
+    <div class="rally-sim">
+      <p class="rally-hint">ลองกดดูว่าลูกนี้ใครได้แต้ม แล้วดูว่าคะแนน/สิทธิ์เสิร์ฟเปลี่ยนยังไง — ไม่ต้องอ่าน แค่กดเล่นดู</p>
+      <div class="mini-court">
+        <div class="court-half top-half">
+          <div class="court-box" id="topLeftBox"></div>
+          <div class="court-box" id="topRightBox"></div>
+        </div>
+        <div class="net-line"></div>
+        <div class="court-half bottom-half">
+          <div class="court-box" id="bottomLeftBox"></div>
+          <div class="court-box" id="bottomRightBox"></div>
+        </div>
       </div>
-      <div class="sim-result">
-        แต้มของฝ่ายเสิร์ฟตอนนี้คือ <b id="scoreParity">คู่ (เลขคู่)</b> →
-        เสิร์ฟจากฝั่ง <span class="side" id="scoreSide">ขวา</span>
+      <div class="rally-scoreboard">
+        <div class="team-panel" id="teamTopPanel">
+          <div class="team-label">ฝั่งบน</div>
+          <div class="team-score" id="scoreTop">0</div>
+          <div class="serve-indicator" id="serveIndicatorTop">🏸 กำลังเสิร์ฟ</div>
+        </div>
+        <div class="vs-divider">VS</div>
+        <div class="team-panel" id="teamBottomPanel">
+          <div class="team-label">ฝั่งล่าง</div>
+          <div class="team-score" id="scoreBottom">0</div>
+          <div class="serve-indicator" id="serveIndicatorBottom">🏸 กำลังเสิร์ฟ</div>
+        </div>
       </div>
+      <div class="rally-log" id="rallyLog">ฝั่งบนเป็นฝ่ายเสิร์ฟก่อน — กดปุ่มด้านล่างเพื่อจำลองลูกแรก</div>
+      <div class="rally-buttons">
+        <button class="rally-btn top-btn" id="btnTopWins">ลูกนี้ <b>ฝั่งบน</b> ได้แต้ม</button>
+        <button class="rally-btn bottom-btn" id="btnBottomWins">ลูกนี้ <b>ฝั่งล่าง</b> ได้แต้ม</button>
+      </div>
+      <button class="reset-btn" id="resetRally">🔄 เริ่มเกมใหม่</button>
     </div>
-    <div class="card-grid two" style="margin-top:12px;">
-      <div class="rule-card">
-        <span class="tag">กติกาง่าย ๆ</span>
-        ถ้า<b>แต้มของฝ่ายเสิร์ฟเป็นเลขคู่ (0, 2, 4...)</b> ให้เสิร์ฟจากคอร์ท<b>ขวา</b> ถ้า<b>เป็นเลขคี่ (1, 3, 5...)</b> ให้เสิร์ฟจากคอร์ท<b>ซ้าย</b>
-      </div>
-      <div class="rule-card">
-        <span class="tag">ประเภทคู่ (เพิ่มเติม)</span>
-        ผู้เล่นในทีมจะ<b>สลับคอร์ทซ้าย-ขวากันเอง</b> เฉพาะตอนทีมตัวเองเป็นฝ่ายได้แต้มจากการเสิร์ฟ ไม่ใช่ทุกแต้ม
-      </div>
-    </div>
-  </div>
 
-  <div class="section">
-    <h2><span class="num">3</span>เส้นสนามที่มักสับสน</h2>
-    <div class="card-grid two">
-      <div class="rule-card">
-        <span class="tag">เส้นข้างใน vs เส้นข้างนอก</span>
-        เส้นข้าง<b>ชิดใน</b>คือเขตเดี่ยว เส้นข้าง<b>ริมสุด</b>คือเขตคู่ — เล่นเดี่ยวใช้เส้นในเสมอ ทั้งตอนเสิร์ฟและตีโต้
-      </div>
-      <div class="rule-card">
-        <span class="tag">เส้นเสิร์ฟสั้น</span>
-        ลูกเสิร์ฟต้อง<b>ข้ามเส้นนี้ไปเสมอ</b> (ทั้งเดี่ยวและคู่) ถ้าลูกตกก่อนเส้นนี้ถือว่าเสิร์ฟออก
-      </div>
-      <div class="rule-card">
-        <span class="tag">จุดที่สับสนที่สุด: เส้นหลังตอนเสิร์ฟคู่</span>
-        เล่น<b>คู่</b> เวลาเสิร์ฟ ลูกต้องตก<b>ก่อน</b>เส้นในสุด (ใกล้ตาข่ายกว่าเส้นหลังจริง) ถ้าลูกเลยเส้นนี้ไปถือว่าออก — แต่พอเริ่มตีโต้แล้ว เส้นหลังสุด(ตัวจริง) กลับมาใช้งานได้ตามปกติ
-      </div>
-      <div class="rule-card">
-        <span class="tag">เล่นเดี่ยว: เส้นหลังตอนเสิร์ฟ</span>
-        เล่น<b>เดี่ยว</b> ลูกเสิร์ฟสามารถไปได้ไกลถึง<b>เส้นหลังสุด</b>ของสนามเลย ไม่มีเส้นเสิร์ฟยาวแยกต่างหาก
-      </div>
+    <h3 class="faq-heading">รู้หรือไม่</h3>
+    <div class="faq-list">
+      <details class="faq-item">
+        <summary>ต้องเล่นกี่เกมถึงจะจบแมตช์?</summary>
+        <div class="faq-answer">แข่งแบบ <b>Best of 3 เกม</b> ใครชนะ 2 เกมก่อนคือผู้ชนะแมตช์</div>
+      </details>
+      <details class="faq-item">
+        <summary>หนึ่งเกมต้องได้กี่แต้มถึงชนะ?</summary>
+        <div class="faq-answer">เกมละ <b>21 แต้ม</b> ฝ่ายที่ทำถึง 21 ก่อน และนำอย่างน้อย 2 แต้ม เป็นฝ่ายชนะ</div>
+      </details>
+      <details class="faq-item">
+        <summary>ถ้าคะแนนเสมอกันจะจบยังไง?</summary>
+        <div class="faq-answer">ถ้าคะแนนเสมอ <b>20–20</b> ต้องเล่นต่อจนกว่าฝ่ายใดฝ่ายหนึ่งนำ 2 แต้ม แต่ถ้าถึง <b>29–29</b> ใครได้ 30 ก่อนชนะทันที (คะแนนสูงสุด 30)</div>
+      </details>
+      <details class="faq-item">
+        <summary>ทำไมบางทีไม่ได้เสิร์ฟก็ยังได้แต้ม?</summary>
+        <div class="faq-answer">ทุกลูกที่ตีโต้จบลง <b>นับแต้มให้ฝ่ายที่ได้ลูกนั้นเสมอ</b> ไม่ว่าฝ่ายนั้นจะเป็นฝ่ายเสิร์ฟหรือไม่ก็ตาม (เรียกว่า Rally Point System)</div>
+      </details>
+      <details class="faq-item">
+        <summary>ต้องสลับฝั่งสนามตอนไหนบ้าง?</summary>
+        <div class="faq-answer">สลับฝั่งเมื่อจบเกมที่ 1 และก่อนเริ่มเกมที่ 3 ต้องสลับฝั่งอีกครั้งเมื่อฝ่ายใดฝ่ายหนึ่งถึง <b>11 แต้ม</b></div>
+      </details>
+      <details class="faq-item">
+        <summary>เมื่อไหร่สิทธิ์เสิร์ฟจะเปลี่ยนมือ?</summary>
+        <div class="faq-answer">เมื่อฝ่ายรับลูกเสิร์ฟเป็นฝ่ายได้แต้มในลูกนั้น ฝ่ายนั้นจะได้แต้ม <b>และ</b> ได้สิทธิ์เสิร์ฟต่อทันที</div>
+      </details>
+      <details class="faq-item">
+        <summary>จะรู้ได้ไงว่าต้องเสิร์ฟฝั่งซ้ายหรือขวา?</summary>
+        <div class="faq-answer">ถ้า<b>แต้มของฝ่ายเสิร์ฟเป็นเลขคู่ (0, 2, 4...)</b> เสิร์ฟจากคอร์ท<b>ขวา</b> ถ้า<b>เป็นเลขคี่ (1, 3, 5...)</b> เสิร์ฟจากคอร์ท<b>ซ้าย</b> (ดูตัวอย่างในสนามจำลองด้านบน)</div>
+      </details>
+      <details class="faq-item">
+        <summary>เล่นคู่ ใครเป็นคนเสิร์ฟกันแน่?</summary>
+        <div class="faq-answer">ผู้เล่นในทีมจะ<b>สลับคอร์ทซ้าย-ขวากันเอง</b> เฉพาะตอนทีมตัวเองเป็นฝ่ายได้แต้มจากการเสิร์ฟ ไม่ใช่ทุกแต้ม</div>
+      </details>
     </div>
   </div>
 
@@ -313,11 +373,6 @@ function render(){
     const boxX = targetIsLeft ? leftX : centerX;
     const boxW = targetIsLeft ? (centerX-leftX) : (rightX-centerX);
 
-    // out-of-bounds red strip for doubles serve (between doubles long line and back boundary),
-    // restricted to the same column as the target box so it doesn't imply the other box is in play
-    if(isDoubles){
-      g.appendChild(el('rect', {x:boxX, y:backFar, width:boxW, height:doublesLongFar-backFar, fill:'#c23a2a', opacity:.5}));
-    }
     const boxYtop = isDoubles ? doublesLongFar : backFar;
     const boxH = shortServiceFar - boxYtop;
     g.appendChild(el('rect', {x:boxX, y:boxYtop, width:boxW, height:boxH, fill:'#e8543e', opacity:.55, rx:2}));
@@ -327,6 +382,9 @@ function render(){
     const serverCX = serverIsLeft ? (leftX+centerX)/2 : (centerX+rightX)/2;
     const serverCY = (shortServiceNear + backNear)/2;
     g.appendChild(el('circle', {cx:serverCX, cy:serverCY, r:7, fill:'#f2b134'}));
+    const serverLabel = el('text', {x:serverCX, y:serverCY+20, 'text-anchor':'middle', 'font-family':'Kanit', 'font-weight':'600', 'font-size':'13', fill:'#f2b134'});
+    serverLabel.textContent = 'เสิร์ฟ';
+    g.appendChild(serverLabel);
   } else {
     // rally: whole court (both halves), sideline width depends on game type
     g.appendChild(el('rect', {x:leftX, y:0, width:rightX-leftX, height:backNear, fill:'#2ea89a', opacity:.4, rx:2}));
@@ -340,7 +398,7 @@ function updateLegend(){
   if(state.phase === 'serve'){
     title.textContent = 'พื้นที่ที่ลูกเสิร์ฟต้องตกลงไปจึงจะ "ใน"';
     desc.textContent = isDoubles
-      ? 'เล่นคู่: กว้างถึงเส้นข้างริมสุด แต่ลึกได้แค่ก่อนเส้นหลังใน (แถบแดงคือโซนที่เสิร์ฟออก)'
+      ? 'เล่นคู่: กว้างถึงเส้นข้างริมสุด แต่ลึกได้แค่ก่อนเส้นหลังใน (เส้นประ)'
       : 'เล่นเดี่ยว: แคบกว่าตามเส้นข้างใน แต่ลึกได้ถึงเส้นหลังสุดของสนาม';
   } else {
     title.textContent = 'พื้นที่ที่ใช้ได้ตอนตีโต้กันไปมา';
@@ -369,20 +427,90 @@ drawBaseCourt();
 render();
 updateLegend();
 
-// score simulator
-let simScore = 0;
-const scoreDisplay = document.getElementById('scoreDisplay');
-const scoreParity = document.getElementById('scoreParity');
-const scoreSide = document.getElementById('scoreSide');
-function updateSim(){
-  scoreDisplay.textContent = simScore;
-  const even = simScore % 2 === 0;
-  scoreParity.textContent = even ? 'คู่ (เลขคู่)' : 'คี่ (เลขคี่)';
-  scoreSide.textContent = even ? 'ขวา' : 'ซ้าย';
+// rally point simulator
+let scoreTop = 0, scoreBottom = 0, rallyServer = 'top', rallyOver = false;
+const rallyLog = document.getElementById('rallyLog');
+const btnTopWins = document.getElementById('btnTopWins');
+const btnBottomWins = document.getElementById('btnBottomWins');
+
+function checkRallyWin(){
+  const hiScore = Math.max(scoreTop, scoreBottom);
+  const loScore = Math.min(scoreTop, scoreBottom);
+  const hiTeam = scoreTop >= scoreBottom ? 'top' : 'bottom';
+  if(hiScore >= 30) return hiTeam;
+  if(hiScore >= 21 && (hiScore - loScore) >= 2) return hiTeam;
+  return null;
 }
-document.getElementById('scorePlus').addEventListener('click', ()=>{ if(simScore<30) simScore++; updateSim(); });
-document.getElementById('scoreMinus').addEventListener('click', ()=>{ if(simScore>0) simScore--; updateSim(); });
-updateSim();
+
+function updateMiniCourt(){
+  ['topLeftBox','topRightBox','bottomLeftBox','bottomRightBox'].forEach(id=>{
+    const box = document.getElementById(id);
+    box.textContent = '';
+    box.classList.remove('target-box');
+  });
+  if(rallyOver) return;
+  const serverScore = rallyServer === 'top' ? scoreTop : scoreBottom;
+  const serveFromRight = serverScore % 2 === 0;
+  let serverBoxId, targetBoxId;
+  if(rallyServer === 'top'){
+    serverBoxId = serveFromRight ? 'topRightBox' : 'topLeftBox';
+    targetBoxId = serveFromRight ? 'bottomLeftBox' : 'bottomRightBox';
+  } else {
+    serverBoxId = serveFromRight ? 'bottomRightBox' : 'bottomLeftBox';
+    targetBoxId = serveFromRight ? 'topLeftBox' : 'topRightBox';
+  }
+  document.getElementById(serverBoxId).innerHTML = '🏸<br><span class="serve-label">เสิร์ฟ</span>';
+  document.getElementById(targetBoxId).classList.add('target-box');
+}
+
+function renderRally(){
+  document.getElementById('scoreTop').textContent = scoreTop;
+  document.getElementById('scoreBottom').textContent = scoreBottom;
+  document.getElementById('serveIndicatorTop').style.opacity = (rallyServer==='top' && !rallyOver) ? 1 : 0;
+  document.getElementById('serveIndicatorBottom').style.opacity = (rallyServer==='bottom' && !rallyOver) ? 1 : 0;
+  document.getElementById('teamTopPanel').classList.toggle('serving', rallyServer==='top' && !rallyOver);
+  document.getElementById('teamBottomPanel').classList.toggle('serving', rallyServer==='bottom' && !rallyOver);
+  btnTopWins.disabled = rallyOver;
+  btnBottomWins.disabled = rallyOver;
+  updateMiniCourt();
+}
+
+function pointWonBy(team){
+  if(rallyOver) return;
+  const label = team === 'top' ? 'ฝั่งบน' : 'ฝั่งล่าง';
+  const wasServer = rallyServer === team;
+  if(team === 'top') scoreTop++; else scoreBottom++;
+
+  let msg;
+  if(wasServer){
+    msg = label + ' เสิร์ฟแล้วได้แต้ม → ได้เสิร์ฟต่อ (สลับซ้าย/ขวาตามคะแนนใหม่)';
+  } else {
+    rallyServer = team;
+    msg = label + ' รับลูกแล้วได้แต้ม → ได้สิทธิ์เสิร์ฟต่อทันที (side out)';
+  }
+
+  const winner = checkRallyWin();
+  if(winner){
+    rallyOver = true;
+    msg = '🏆 ' + (winner==='top' ? 'ฝั่งบน' : 'ฝั่งล่าง') + ' ชนะเกมนี้ด้วยคะแนน ' + scoreTop + '-' + scoreBottom + '!';
+    rallyLog.classList.add('log-winner');
+  } else {
+    rallyLog.classList.remove('log-winner');
+  }
+  rallyLog.textContent = msg;
+  renderRally();
+}
+
+btnTopWins.addEventListener('click', ()=>pointWonBy('top'));
+btnBottomWins.addEventListener('click', ()=>pointWonBy('bottom'));
+document.getElementById('resetRally').addEventListener('click', ()=>{
+  scoreTop = 0; scoreBottom = 0; rallyServer = 'top'; rallyOver = false;
+  rallyLog.classList.remove('log-winner');
+  rallyLog.textContent = 'ฝั่งบนเป็นฝ่ายเสิร์ฟก่อน — กดปุ่มด้านล่างเพื่อจำลองลูกแรก';
+  renderRally();
+});
+renderRally();
+
 </script>
 </body>
 </html>
